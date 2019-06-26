@@ -1,0 +1,547 @@
+#parse("share/header.html")
+<div id="page-wrapper" class="pageBg">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">账户基本信息</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="xm12">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="my-pos">
+                            <h4 class="my-page-header">用户信息</h4>
+                            <div class="my-btn-l">
+                                <button class="btn btn-default" id="updateUser">保存</button>
+                                <!-- <a href="#springUrl('')/view/updatePasswordIndex"><button class="btn btn-default">修改密码</button></a> -->
+                            </div>
+                        </div>
+
+                        <form id="userForm">
+                            <input type="hidden" name="id" id="userid" value="$u.id">
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">用户名称</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="username" id="username" placeholder=""
+                                           value="$u.username" autocomplete="off" disabled>
+                                </div>
+                                <div class="col-lg-4 my-ps11"></div>
+                            </div>
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">联系电话</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="userphone" id="userphone" placeholder=""
+                                           autocomplete="off" #if($u.phone) value="$u.phone" #end>
+                                </div>
+                                <div class="col-lg-4 my-ps12"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="my-pos">
+                            <h4 class="my-page-header">商户基本信息</h4>
+                            <button class="btn btn-default my-btn-l" id="updateCustom">保存</button>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div style="padding-left: 20px">
+                                    <form id="customForm">
+                                        <input type="hidden" name="id" value="$custombase.id">
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">商户名称</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="cusname" #if($custombase.cusname)
+                                                       value="$custombase.cusname" #end autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps1"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">商户简称</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="custshort" #if($custombase.custshort)
+                                                       value="$custombase.custshort" #end autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps2"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">联系电话</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="phone" placeholder="请输入联系电话"
+                                                       #if($custombase.phone) value="$custombase.phone" #end
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps3"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <label class="col-lg-2 account-label">入驻时间</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="" placeholder=""
+                                                       #if($custombase.ctime) value="$custombase.ctime" #end disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">商户编码</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="code" #if($custombase.code)
+                                                       value="$custombase.code" #end disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">商户类别</label>
+                                            <div class="col-lg-6">
+                                                <input name="custype" type="hidden" #if($custombase.custype)
+                                                       value="$custombase.custype" #end>
+                                                <input class="form-control" name="cusname" #if($custombase.typename)
+                                                       value="$custombase.typename" #end disabled>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group col-lg-12 my-feedback">
+                                            <label class="col-lg-1 account-label">联系地址</label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" name="addr" placeholder="请输入商户地址"
+                                                       #if($custombase.addr) value="$custombase.addr" #end>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-lg-12 my-feedback">
+                                            <label class="col-lg-1 account-label">商户介绍</label>
+                                            <div class="col-lg-9">
+                                                <textarea rows="6" style="width: 100%" name="remark2">#if($custombase.remark2)$custombase.remark2#end</textarea>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div style="text-align: center;">
+                                    #if($customset.wxacodepath)
+                                    <img alt="" src="$customset.wxacodepath" width="180px" height="180px">
+                                    #end
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            #if (!($null.isNull($button) || $button.size()==0))
+                #if(${button.get('account:kp')})
+
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="my-pos">
+                                    <h4 class="my-page-header">商户开票信息</h4>
+                                    <button class="btn btn-default my-btn-l" id="updateCustomKp">保存</button>
+                                </div>
+                                <div style="padding-left: 20px">
+                                    <form id="customKpForm">
+                                        <input type="hidden" name="id" value="$custombase.id">
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">税&nbsp;&nbsp;号</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="sh" placeholder="请输入税号" #if($custombase.sh)
+                                                       value="$custombase.sh" #end autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps4"></div>
+                                        </div>
+
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">复核人</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="fuheName" placeholder="请输入开票复核人"
+                                                       #if($custombase.fuheName) value="$custombase.fuheName" #end
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps7"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6  my-feedback">
+                                            <label class="col-lg-2 account-label">开票人</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="kpName" placeholder="请输入开票人"
+                                                       #if($custombase.kpName) value="$custombase.kpName" #end>
+                                            </div>
+                                            <div class="col-lg-4 my-ps8"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6  my-feedback">
+                                            <label class="col-lg-2 account-label">收款人</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="skName" placeholder="请输入收款人"
+                                                       #if($custombase.skName) value="$custombase.skName" #end>
+                                            </div>
+                                            <div class="col-lg-4 my-ps9"></div>
+                                        </div>
+
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">账户银行</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="bankname" placeholder="账户银行"
+                                                       #if($custombase.bankname) value="$custombase.bankname" #end
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps5"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 account-label">银行账号</label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" name="bankcard" placeholder="银行账号"
+                                                       #if($custombase.bankcard) value="$custombase.bankcard" #end
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 my-ps6"></div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                     </div>
+                #end
+            #end
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4 class="my-page-header">套餐信息</h4>
+                        #if($custominfo)
+                        <form>
+                            <div class="form-group col-lg-6">
+                                <label class="col-lg-2 account-label">套餐名称:</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="" placeholder="" value="$custominfo.tcname"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="col-lg-2 account-label">套餐数量</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="" placeholder="" value="$custominfo.tcnum"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="col-lg-2 account-label">套餐单价</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="" placeholder="" value="$custominfo.tcprice"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="col-lg-2 account-label">套餐折扣</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="" placeholder="" value="$custominfo.tcdisc"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="col-lg-2 account-label">套餐金额</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="" placeholder="" value="$custominfo.tcmon"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="col-lg-2 account-label">账户余额</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="" placeholder="" value="$custominfo.cusmon"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label class="col-lg-1 account-label">套餐时间</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" name="" placeholder="" #if($custominfo.starttime &&
+                                           $custominfo.endtime ) value="$custominfo.starttime - $custominfo.endtime"
+                                           #end disabled>
+                                </div>
+                            </div>
+                        </form>
+                        #else
+                        <div>
+                            <h4>
+                                未开通套餐
+                            </h4>
+                        </div>
+                        #end
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var userid = $('#userid').val();
+
+    $(function () {
+        //商户基本信息 表单验证
+        $("#customForm").bootstrapValidator({
+            live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+            submitButtons: '#updateCustom',//指定提交按钮
+            message: '验证失败',
+            feedbackIcons: {//根据验证结果显示的各种图标
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                cusname: {
+                    container: '.my-ps1',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '商户名称必须输入'
+                        },
+                        stringLength: {//检测长度
+                            min: 6,
+                            max: 30,
+                            message: '长度必须在6-30之间'
+                        },
+                    }
+                },
+                custshort: {
+                    container: '.my-ps2',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '商户简称必须输入'
+                        }
+                    }
+                },
+                phone: {
+                    container: '.my-ps3',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '联系电话必须输入'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
+                            message: '所输入的电话号码不符要求'
+                        }
+                    }
+                },
+                addr: {
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '商户地址必须输入'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 用户信息表单验证
+        $("#userForm").bootstrapValidator({
+            live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+            submitButtons: '#updateUser',//指定提交按钮
+            message: '验证失败',
+            feedbackIcons: {//根据验证结果显示的各种图标
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    verbose: false,
+                    container: '.my-ps11',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '用户名称必须输入'
+                        },
+                        stringLength: {//检测长度
+                            min: 2,
+                            max: 10,
+                            message: '长度必须在2-10之间'
+                        },
+                        remote: {
+                            url: '#springUrl('')/user/checkUserName?userid=' +userid,
+                            message: '已被注册',
+                            //delay: 1000,
+                            type: 'POST'
+                        },
+                    }
+                },
+                userphone: {
+                    container: '.my-ps12',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '联系电话必须输入'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
+                            message: '所输入的电话号码不符要求'
+                        }
+                    }
+                }
+            }
+        });
+
+        //商户基本信息 表单验证
+        $("#customKpForm").bootstrapValidator({
+            live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+            submitButtons: '#updateCustomKp',//指定提交按钮
+            message: '验证失败',
+            feedbackIcons: {//根据验证结果显示的各种图标
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                sh: {
+                    container: '.my-ps4',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '商户名称必须输入'
+                        },
+                        stringLength: {//检测长度
+                            min: 6,
+                            max: 30,
+                            message: '长度必须在6-30之间'
+                        },
+                    }
+                },
+                bankname: {
+                    container: '.my-ps5',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '账户银行不能为空！'
+                        }
+                    }
+                },
+                bankcard: {
+                    container: '.my-ps6',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '银行账号不能为空！'
+                        }
+                    }
+                },
+                fuheName: {
+                    container: '.my-ps7',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '复核人不能为空！'
+                        }
+                    }
+                },
+                kpName: {
+                    container: '.my-ps8',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: ' 开票人不能为空！'
+                        }
+                    }
+                },
+                skName: {
+                    container: '.my-ps9',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: ' 收款人不能为空！'
+                        }
+                    }
+                }
+            }
+        });
+
+        //修改商户基本信息
+        $("#updateCustom").click(function () {
+            $("#customForm").bootstrapValidator('validate'); //提交验证
+            if ($("#customForm").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码
+                Ewin.confirm({message: "确认要修改数据吗？"}).on(function (e) {
+                    if (!e) {
+                        return;
+                    }
+                    //提交
+                    jQuery.ajax({
+                        url: "#springUrl('')/custombase/saveCustombase",
+                        dataType: "json",
+                        data: $("#customForm").serialize(),
+                        type: "post",
+                        asyn: false,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.status == true) {
+                                window.location.reload();
+                            } else {
+                                Ewin.alert({message: result.msg}).on(function (evel) {
+                                    window.location.reload();
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        //修改商户开票信息
+        $('#updateCustomKp').click(function () {
+            $("#customKpForm").bootstrapValidator('validate'); //提交验证
+            if ($("#customKpForm").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码
+                Ewin.confirm({message: "确认要修改数据吗？"}).on(function (e) {
+                    if (!e) {
+                        return;
+                    }
+                    //提交
+                    jQuery.ajax({
+                        url: "#springUrl('')/custombase/saveCustombase",
+                        dataType: "json",
+                        data: $("#customKpForm").serialize(),
+                        type: "post",
+                        asyn: false,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.status == true) {
+                                window.location.reload();
+                            } else {
+                                Ewin.alert({message: result.msg}).on(function (evel) {
+                                    window.location.reload();
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        //修改用户信息
+        $("#updateUser").click(function () {
+            $("#userForm").bootstrapValidator('validate'); //提交验证
+            if ($("#userForm").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码
+                Ewin.confirm({message: "确认要修改数据吗？"}).on(function (e) {
+                    if (!e) {
+                        return;
+                    }
+                    //提交
+                    jQuery.ajax({
+                        url: "#springUrl('')/user/saveUser",
+                        dataType: "json",
+                        data: {id: $('#userid').val(), username: $('#username').val(), phone: $('#userphone').val()},
+                        type: "post",
+                        asyn: false,
+                        success: function (result) {
+                            if (result.status == true) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+    })
+</script>
+
+#parse("share/footer.html")

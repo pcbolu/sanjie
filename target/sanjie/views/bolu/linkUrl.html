@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎使用三阶跳转</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        position: relative;
+    }
+
+    #top{
+        width: 100%;
+        position: absolute;
+        background: rgba(255,255,255,0.8);
+    }
+    iframe{
+        border: none;
+        width: 100%;
+    }
+    p{
+        text-align: center;
+        height:30px;
+        line-height: 30px;
+        font-size:14px ;
+        color: #ff6300;
+    }
+
+    #msg{
+        padding-top:100px;
+        text-align: center;
+        color: #cccccc;
+    }
+
+</style>
+<body>
+<div id="top">
+    <p>$msg</p>
+    <p>技术咨询 QQ:$qq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微信:$wx</p>
+</div>
+#if($code=='1')
+<iframe src="http://$url" id="external-frame" marginheight="0" onload="setIframeHeight(this)" frameborder="0" scrolling="no" width="100%" height="100%"> </iframe>
+#else
+<h2 id="msg">$msg</h2>
+#end
+</body>
+
+<script>
+    //iframe自适应高度
+    function setIframeHeight(iframe) {
+        if(iframe) {
+            iframe.height = window.screen.height;
+        }
+    };
+
+    window.onload = function() {
+        setIframeHeight(document.getElementById('external-frame'));
+    };
+
+</script>
+</html>

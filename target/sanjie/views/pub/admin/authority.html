@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$SysName</title>
+    #parse("share/header.html")
+</head>
+<body>
+#parse("share/top.html")
+<div id="page-wrapper" class="pageBg">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header my-authority-tit">权限管理<span class="my-authority-span">（$title）</span></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="xm12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="my-pos" name="$type" id="$id">
+                        <!-- <h4 class="my-page-header">$title</h4> -->
+                        <div class="my-authority-header">
+                        </div>
+                        <button class="btn btn-default my-btn-l" id="addAuthority">保存</button>
+                    </div>
+                </div>
+                <div class="panel-body" id="authorityMain">
+                    <div class="table-responsive" id="table1">
+
+                        <div class="authorityTh">
+                            <div class="authorityTh-l">一级</div>
+                            <div class="authorityTh-r">
+                                <div class="authorityTh-r-l">二级</div>
+                                <div class="authorityTh-r-r">权限配置细则</div>
+                            </div>
+                        </div>
+
+                        <div class="authorityMain">
+                            #foreach($funList in $funMenu)
+                            <div class="authorityBody">
+                                <div class="oneLv">
+                                    <lable class="">
+                                        <span class="iconClass$funList.checked" id="$funList.id">$funList.name</span>
+                                    </lable>
+                                </div>
+                                <div class="t">
+                                    #foreach($subfunList in $funList.subfun)
+                                    <div class="twoLv">
+                                        <div class="twoLlist">
+                                            <lable class="">
+                                                <span class="iconClass$subfunList.checked" id="$subfunList.id">$subfunList.name</span>
+                                            </lable>
+                                        </div>
+                                        <div class="threeLv">
+                                            #foreach($subfunList2 in $subfunList.subfun)
+                                            <lable class="">
+                                                <span class="iconClass$subfunList2.checked" id="$subfunList2.id">$subfunList2.name</span>
+                                            </lable>
+                                            #end
+                                        </div>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                    #end
+                                </div>
+                            </div>
+                            #end
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="#springUrl('')/Content/admin/js/authority.js"></script>
+<script type="text/javascript">
+    $(function () {
+        console.log("$type,$funMenuTwo")
+        var url = ["#springUrl('')/fun/saveAuthority", "#springUrl('')/view/roleIndex", "#springUrl('')/view/customIndex"];
+        $("#authorityMain").funAuthority(url, {
+            type: "$type",
+            id: "$id",
+        });
+    })
+
+</script>
+</body>
+</html>

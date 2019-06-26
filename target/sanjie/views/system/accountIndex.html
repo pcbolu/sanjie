@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$SysName</title>
+    #parse("share/header.html")
+    <style>
+        .my-div {
+            position: relative;
+        }
+
+        .my-b {
+            display: inline-block;
+            position: absolute;
+            border: 1px #0D8BCC solid;
+            width: 18%;
+            min-width: 45px;
+            text-align: center;
+            height: 34px;
+            line-height: 34px;
+            right: 2px;
+            cursor: pointer;
+        }
+
+        .my-copy {
+            min-width: 45px;
+            display: inline-block;
+            position: absolute;
+            border: 1px #0D8BCC solid;
+            width: 6%;
+            text-align: center;
+            height: 34px;
+            line-height: 34px;
+            right: 2px;
+            background-color: white;
+        }
+
+        .spanText {
+            display: inline-block;
+            width: 100%;
+            border-bottom: 1px #CCCCCC solid;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 12px;
+        }
+
+        .copyAfter{
+            background-color: #008EFF;
+            color: white;
+        }
+
+        #tip{
+            position: absolute;
+            padding: 20px 40px;
+            border: 1px #CCCCCC solid;
+            display: inline-block;
+            text-align: center;
+            z-index: 200;
+            background-color: white;
+            margin: 0 auto;
+            left:50%;
+            top:50%;
+            margin-left:-50px;
+            margin-top:-50px;
+            border-radius: 5px;
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="tip">
+    复制成功！
+</div>
+#parse("share/top.html")
+<div id="page-wrapper" class="pageBg">
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="xm12">
+            <div class="col-lg-12" style="margin-top: 20px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="my-pos">
+                            <h4 class="my-page-header">我的账号</h4>
+                        </div>
+
+                        <form id="userForm">
+                            <input type="hidden" name="id" id="userid" value="$u.id">
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">用户名称</label>
+                                <div class="col-lg-6">
+                                   <span id="username" class="spanText">
+                                       $u.username
+                                    </span>
+                                </div>
+                                <div class="col-lg-4 my-ps11"></div>
+                            </div>
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">用户电话</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="userphone" id="userPhone" placeholder=""
+                                           autocomplete="off" #if($u.phone) value="$u.phone" #end>
+                                </div>
+                                <div class="col-lg-4 my-ps12"></div>
+                            </div>
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">日限制数量</label>
+                                <input type="hidden" id="dayNum" #if($cusInfoSet.dayNum) value="$cusInfoSet.dayNum"
+                                       #end>
+                                <div class="col-lg-6">
+                                    <span class="spanText">
+                                        #if($cusInfoSet.dayNum)$cusInfoSet.dayNum #end
+                                    </span>
+                                </div>
+                                <div class="col-lg-4 my-ps11"></div>
+                            </div>
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">预警数量</label>
+                                <div class="col-lg-6">
+                                    <input class="form-control" name="warnimgNum" #if($cusInfoSet.warnimgNum) value="$cusInfoSet.warnimgNum" #end id="warnimgNum" placeholder=""
+                                           autocomplete="off">
+                                </div>
+                                <div class="col-lg-4 my-ps12"></div>
+                            </div>
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">我的秘钥</label>
+                                <div class="col-lg-6">
+                                    <div class="my-div">
+                                        <span class="spanText" style="width:80%">
+                                                #if($cusInfoSet.urlPwd)$cusInfoSet.urlPwd#end
+                                        </span>
+                                        <span class="col-lg-1 my-b" id="updatePwd">修改</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6 my-feedback">
+                                <label class="col-lg-2 account-label">我的邀请码</label>
+                                <div class="col-lg-6">
+                                    <div class="my-div">
+                                        #if($cusInfoSet.inviteSta==0)
+                                        <input class="form-control" name="username" id="inviteCode" placeholder=""
+                                               autocomplete="off" #if($cusInfoSet.inviteCode)
+                                               value="$cusInfoSet.inviteCode" #end
+                                               style="display:inline-block;width:80%">
+                                        <span class="col-lg-1 my-b" id="updateInviteCode">修改</span>
+                                        #else
+                                        <span class="spanText">
+                                                $cusInfoSet.inviteCode
+                                        </span>
+                                        #end
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-lg-12 my-feedback">
+                                <label class="col-lg-1 account-label">配置链接</label>
+                                <div class="col-lg-9">
+                                    <div class="my-div">
+                                        <span class="spanText" style="width: 93%;font-size:12px;overflow: paged-x"
+                                              title="http://www.pcsanjie.com/sanjie/page?taowords={淘口令}&url={返利链接}&image={图片地址}&pwd=$cusInfoSet.urlPwd">
+                                            http://www.pcsanjie.com/sanjie/page?taowords={淘口令}&url={返利链接}&image={图片地址}&pwd=<span
+                                                id="urlPwd">#if($cusInfoSet.urlPwd)$cusInfoSet.urlPwd#end</span>
+                                        </span>
+                                        <!-- <input class="form-control" name="username"   placeholder="" value="pcbolu" autocomplete="off" style="display: inline-block;width:93%" >-->
+                                        <button class="col-lg-1 my-copy" data-clipboard-text="http://www.pcsanjie.com/sanjie/page?taowords={淘口令}&url={返利链接}&image={图片地址}&pwd=$cusInfoSet.urlPwd" id="copy">复制</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="my-pos">
+                            <h4 class="my-page-header">我的信息</h4>
+                            <button class="btn btn-default my-btn-l" id="updateCustom">保存</button>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div style="padding-left: 20px">
+                                    <form id="customForm">
+                                        <input type="hidden" name="id" value="$cusInfo.id" id="cusid">
+                                        <div class="form-group col-lg-6 col-md-6">
+                                            <label class="col-lg-2 col-md-2 account-label">入驻时间</label>
+                                            <div class="col-lg-6 col-md-6">
+                                                <span class="spanText" id="ctime">$cusInfo.createTime</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 my-feedback">
+                                            <label class="col-lg-2 col-md-2 account-label">入驻编号</label>
+                                            <div class="col-lg-6 col-md-6">
+                                                <span class="spanText" id="code">$cusInfo.code</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-lg-6 col-md-6 my-feedback">
+                                            <label class="col-lg-2 col-md-2 account-label">入驻名称</label>
+                                            <div class="col-lg-6 col-md-6">
+                                                <input class="form-control" name="cusname" #if($cusInfo.cusName)
+                                                       value="$cusInfo.cusName" #end autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 my-ps1"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 my-feedback">
+                                            <label class="col-lg-2 col-md-2 account-label">简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</label>
+                                            <div class="col-lg-6 col-md-6">
+                                                <input class="form-control" name="custshort" #if($cusInfo.shortName)
+                                                       value="$cusInfo.shortName" #end autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 my-ps2"></div>
+                                        </div>
+
+
+                                        <div class="form-group col-lg-6 col-md-6 my-feedback">
+                                            <label class="col-lg-2 col-md-2 account-label">联&nbsp;&nbsp;系&nbsp;&nbsp;人</label>
+                                            <div class="col-lg-6 col-md-6">
+                                                <input class="form-control" name="phone" placeholder="联系人"
+                                                       #if($cusInfo.person) value="$cusInfo.person" #end
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 my-ps3"></div>
+                                        </div>
+                                        <div class="form-group col-lg-6 my-feedback">
+                                            <label class="col-lg-2 col-md-2 account-label">联系电话</label>
+                                            <div class="col-lg-6 col-md-6">
+                                                <input class="form-control" name="tel" placeholder="请输入联系电话"
+                                                       #if($cusInfo.tel) value="$cusInfo.tel" #end
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 my-ps3"></div>
+                                        </div>
+
+                                        <div class="form-group col-lg-12 col-md-12 my-feedback">
+                                            <label class="col-lg-1 col-md-1 account-label">联系地址</label>
+                                            <div class="col-lg-9 col-md-9">
+                                                <input class="form-control" name="address" placeholder="请输入商户地址"
+                                                       #if($cusInfo.address) value="$cusInfo.address" #end>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-lg-12 col-md-12 my-feedback">
+                                            <label class="col-lg-1 col-md-1 account-label">介&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;绍</label>
+                                            <div class="col-lg-9 col-md-9">
+                                                <textarea rows="6" style="width: 100%" name="remark2">#if($cusInfo.describe)$cusInfo.describe#end</textarea>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="#springUrl('')/Content/admin/js/page/clipboard.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript">
+
+    //复制文本
+    var clipboard = new Clipboard('#copy');
+
+    clipboard.on('success',
+        function (e) {
+            if (e.trigger.disabled == false || e.trigger.disabled == undefined) {
+                e.trigger.disabled = true;
+                e.trigger.classList="col-lg-1 my-copy copyAfter";
+
+                $("#tip").fadeIn(200,function(){
+                });
+
+                //2秒后按钮恢复原状
+                setTimeout(function () {
+                        e.trigger.classList="col-lg-1 my-copy";
+                        e.trigger.disabled = false;
+                        $("#tip").fadeOut(200,function(){
+                        });
+                    },
+                    2000);
+            }
+        });
+
+    $("p").show(4000,function(){
+
+    });
+
+
+
+    clipboard.on('error',
+        function (e) {
+            e.trigger.innerHTML = "复制失败";
+        });
+
+
+    var userid = $('#userid').val();
+    $(function () {
+
+        //商户基本信息 表单验证
+        $("#customForm").bootstrapValidator({
+            live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+            submitButtons: '#updateCustom',//指定提交按钮
+            message: '验证失败',
+            feedbackIcons: {//根据验证结果显示的各种图标
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                cusname: {
+                    container: '.my-ps1',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '商户名称必须输入'
+                        },
+                        stringLength: {//检测长度
+                            min: 6,
+                            max: 30,
+                            message: '长度必须在6-30之间'
+                        },
+                    }
+                },
+                custshort: {
+                    container: '.my-ps2',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '商户简称必须输入'
+                        }
+                    }
+                },
+                phone: {
+                    container: '.my-ps3',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '联系电话必须输入'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
+                            message: '所输入的电话号码不符要求'
+                        }
+                    }
+                },
+                addr: {
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '商户地址必须输入'
+                        }
+                    }
+                }
+            }
+        });
+
+
+        //修改商户基本信息
+        $("#updateCustom").click(function () {
+            $("#customForm").bootstrapValidator('validate'); //提交验证
+            if ($("#customForm").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码
+                Ewin.confirm({message: "确认要修改数据吗？"}).on(function (e) {
+                    if (!e) {
+                        return;
+                    }
+                    //提交
+                    jQuery.ajax({
+                        url: "#springUrl('')/custombase/saveCustombase",
+                        dataType: "json",
+                        data: $("#customForm").serialize(),
+                        type: "post",
+                        asyn: false,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.status == true) {
+                                window.location.reload();
+                            } else {
+                                Ewin.alert({message: result.msg}).on(function (evel) {
+                                    window.location.reload();
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#userPhone').blur(function () {
+            var phone = $(this).val();
+            console.log("phone:" + phone)
+            jQuery.ajax({
+                url: "#springUrl('')/user/saveUser",
+                dataType: "json",
+                data: {"id": userid, "phone": phone},
+                type: "post",
+                asyn: false,
+                success: function (result) {
+                    console.log(result)
+                    if (result.code == "1") {
+
+                    }
+                }
+            })
+        })
+
+
+        $('#updatePwd').click(function () {
+            Ewin.confirm({message: "秘钥修改后，你的系统需要重新配置，确定需要修改吗？"}).on(function (e) {
+                if (!e) {
+                    return;
+                }
+                var cusid = $('#cusid').val();
+                jQuery.ajax({
+                    url: "#springUrl('')/cusInfo/updateUrlPwd",
+                    dataType: "json",
+                    data: {"id": cusid},
+                    type: "post",
+                    asyn: false,
+                    success: function (result) {
+                        console.log(result)
+                        if (result.code == "1") {
+                            console.log(result.urlPwd);
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+
+
+        $('#updateInviteCode').click(function () {
+            var inviteCode = $('#inviteCode').val();
+
+            var cusid = $('#cusid').val();
+
+            console.log("邀请码：" + inviteCode)
+
+            if (inviteCode.length < 4) {
+                Ewin.alert({message: "邀请码最少4位"}).on(function (evel) {
+                });
+                return;
+            }
+            var isCode = istrue(inviteCode);
+            if (!isCode) {
+                Ewin.alert({message: "邀请码只能输字母跟数字！"}).on(function (evel) {
+                });
+                return;
+            }
+
+            Ewin.confirm({message: "邀请码只能被修改一次，确定要修改吗？"}).on(function (e) {
+                if (!e) {
+                    return;
+                }
+                //提交
+                jQuery.ajax({
+                    url: "#springUrl('')/cusInfo/saveCusInfoSet",
+                    dataType: "json",
+                    data: {"id": cusid, inviteSta: 1, inviteCode: inviteCode},
+                    type: "post",
+                    asyn: false,
+                    success: function (result) {
+                        console.log(result)
+                        if (result.code == "1") {
+                            window.location.reload();
+                        }
+                    }
+                })
+            });
+        })
+
+
+        $('#warnimgNum').blur(function () {
+            var dayNum = $('#dayNum').val();
+            var warnimgNum = $(this).val();
+
+            console.log("dayNum" + dayNum)
+            if (dayNum && warnimgNum) {
+                if (dayNum <= 10) {
+                    Ewin.alert({message: "请开通套餐！"}).on(function (evel) {
+                    });
+                    return;
+                }
+                var cusid = $('#cusid').val();
+                if (warnimgNum > (dayNum / 2)) {
+                    Ewin.alert({message: "预警数量不能大于日限制数量的一半！"}).on(function (evel) {
+                    });
+                    return;
+                }
+                jQuery.ajax({
+                    url: "#springUrl('')/cusInfo/saveCusInfoSet",
+                    dataType: "json",
+                    data: {"id": cusid,warnimgNum:warnimgNum},
+                    type: "post",
+                    asyn: false,
+                    success: function (result) {
+                        console.log(result)
+                        if (result.code == "1") {
+
+                        }
+                    }
+                })
+
+            }
+        });
+
+    });
+
+
+    function istrue(str) {
+        /*   var reg=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;*/
+        var reg = /^[0-9a-zA-Z]*$/g;
+        return reg.test(str);
+    }
+
+</script>
+
+</body>
+</html>

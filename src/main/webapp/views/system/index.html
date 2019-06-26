@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$SysName</title>
+    #parse("share/header.html")
+</head>
+<body>
+#parse("share/top.html")
+<div id="page-wrapper" class="pageBg">
+    <div class="row" style="height: 20px">
+        <!--<div class="col-lg-12">
+            <h3 class="page-header">商户首页</h3>
+        </div>-->
+    </div>
+
+    <div class="row indexTop">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" style="font-size: 24px;">$cusInfoSet.dayNum</div>
+                            <div style="font-size: 20px;">限制次数</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详细信息</span> <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-check-square-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" style="font-size: 24px;">$cusInfoSet.usedNum</div>
+                            <div style="font-size: 20px;">今日访问</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详细信息</span> <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" style="font-size: 24px;">$cusInfoSet.num</div>
+                            <div style="font-size: 20px;">剩余次数</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详细信息</span> <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-times-circle fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" style="font-size: 24px;">$cusInfoSet.warnimgNum</div>
+                            <div style="font-size: 20px;">预警数量</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详细信息</span> <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default" style="margin:0px  0 10px 0px; height:420px;">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i>访问统计
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                选择显示数据
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">按周</a></li>
+                                <li><a href="#">按月</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="morris-area-chart"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $('#startDate').daterangepicker({
+        singleDatePicker: true,//设置为单个的datepicker，而不是有区间的datepicker 默认false
+        timePicker24Hour: true,//设置小时为24小时制 默认false
+        timePicker: false,//可选中时分 默认false
+        locale: {
+            format: "YYYY-MM-DD",
+            separator: " - ",
+            daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+        }
+    });
+    $('#endDate').daterangepicker({
+        singleDatePicker: true,//设置为单个的datepicker，而不是有区间的datepicker 默认false
+        timePicker24Hour: true,//设置小时为24小时制 默认false
+        timePicker: false,//可选中时分 默认false
+        locale: {
+            format: "YYYY-MM-DD",
+            separator: " - ",
+            daysOfWeek: ["日", "一", "二", "三", "四", "五", "六"],
+            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+        }
+    });
+    $(function () {
+        //获取数据
+        jQuery.ajax({
+            url: "#springUrl('')/index/getIndex",
+            dataType: "json",
+            data: "",
+            type: "post",
+            asyn: false,
+            beforeSend: function (data) {
+                $(".loading").show();
+            },
+            success: function (result) {
+                $(".loading").hide();
+                //console.log(result)
+                if (result.code == 1) {
+                    console.log(result)
+                    var data = result.data;
+                    //调用
+                    var line = new Morris.Line({
+                        element: 'morris-area-chart',
+                        resize: true,
+                        data: data,
+                        xkey: 'time',
+                        ykeys: ['count'],
+                        labels: ['访问次数'],
+                        lineColors: ['#00a0ff'],
+                        hideHover: 'auto'
+                    });
+                }
+                else {
+                    //Ewin.alert({ message: result.msg }).on(function (evel) {});
+                }
+            }
+        });
+
+    })
+</script>
+</body>
+</html>

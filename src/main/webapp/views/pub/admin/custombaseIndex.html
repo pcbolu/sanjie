@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>$SysName</title>
+	#parse("share/header.html")
+</head>
+<body>
+#parse("share/top.html")
+<div id="page-wrapper" class="pageBg">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header">商户信息管理</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="xm12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pull-right">
+
+						<!-- Button trigger modal -->
+						#if (!($null.isNull($button) || $button.size()==0)) #if(${button.get('cb:add')})
+						<button class="btn btn-default" data-toggle="modal" data-target="#myModal" id="addCustom">${button.get('cb:add')}</button>
+						#end #end
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<form id="customForm">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											<h4 class="modal-title" id="myModalLabel">添加商户</h4>
+										</div>
+										<div class="modal-body">
+											<input type="hidden" name="id">
+											<div class="form-group">
+												<label>商户名称</label> <input class="form-control" name="cusname" placeholder="请输入商户名称" autoComplete="off">
+											</div>
+
+											<div class="form-group">
+												<label>商户简称</label> <input class="form-control" name="custshort" placeholder="请输入商户简称" autoComplete="off">
+											</div>
+
+											<div class="form-group">
+												<label>商户编码</label> <input class="form-control" name="code" placeholder="请输入商户编码" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>商户税号</label> <input class="form-control" name="sh" placeholder="请输入商户税号" autoComplete="off">
+											</div>
+											<div class="form-group" id="custype-group">
+												<label>商户类别</label> <select class="form-control" id="custype-form" name="custype" onchange="changeType(this.value,'',99)">
+													<option value="0" >---请选择类别---</option> #foreach($tom in $listCustom)
+													<option value="$tom.id" isorg="$tom.isorg" >$tom.typename</option> #end
+												</select>
+											</div>
+											<div class="form-group" id="parCustombase"></div>
+
+											<div class="form-group" id="city-group"></div>
+
+											<div class="form-group">
+												<label>联系电话</label> <input class="form-control" name="phone" placeholder="请输入联系信息" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>商户地址</label> <input class="form-control" name="addr" placeholder="请输入商户地址" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>经度</label> <input class="form-control" name="lon" placeholder="请输入经度" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>纬度</label> <input class="form-control" name="lat" placeholder="请输入纬度" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>配套设施</label> <input class="form-control" name="remark1" placeholder="请输入配套设施" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>复核人</label> <input class="form-control" name="fuheName" placeholder="请输入复核人" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>开票人</label> <input class="form-control" name="kpName" placeholder="请输入开票人" autoComplete="off">
+											</div>
+											<div class="form-group">
+												<label>收款人</label> <input class="form-control" name="skName" placeholder="请输入收款人" autoComplete="off">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+											<button type="button" class="btn btn-primary" id="subCustom">保存</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</form>
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
+					</div>
+
+					<form method="post" id="formid" action="#springUrl('')/view/custombaseIndex">
+						<div class="form-inline">
+							<div class="form-group">
+								<div class="field">
+									<select class="form-control" name="custype" id="custype" style="width: 166px;">
+										<option value="0">---请选择类别---</option> #foreach($tom in $listCustom)
+										<option value="$tom.id" #if($custombase.custype==$tom.id) selected="selected" #end>$tom.typename</option> #end
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="field">
+									<input type="text" class="form-control" id="keyword" name="cusname" #if($custombase.cusname) value="$custombase.cusname" #end style="width: 166px;" placeholder="商户名称">
+								</div>
+							</div>
+							<input type="hidden" name="pageNumber" id="pageNumber" type="hidden" value="1">
+							<button class="btn btn-default" type="submit">搜索</button>
+						</div>
+					</form>
+
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+
+						<table id='table' class='table table-striped table-bordered table-hover' style="text-align: center;">
+							<thead>
+								<tr>
+									<!-- <th width='*' style="text-align: center;">序号</th> -->
+									<th width='*' style="text-align: center; min-width: 120px;">商户名称</th>
+									<th width='*' style="text-align: center;min-width: 100px;">商户编码</th>
+									<!-- <th width='*' style="text-align: center;">商户简称</th> -->
+									<th width='*' style="text-align: center;">商户类别</th>
+									<th width='*' style="text-align: center;">税号</th>
+									<th width='*' style="text-align: center;">联系电话</th>
+									<th width='*' style="text-align: center;display: none;">地址</th>
+									<th width='*' style="text-align: center;">套餐</th> 
+									<th width='*' style="text-align: center;" class="tdTxt">配套设施</th>
+									<th width='*' style="text-align: center;display: none;">介绍</th>
+									#if (!($null.isNull($button) || $button.size()==0))
+									<th width='250px' style="text-align: center">操作</th> #end
+								</tr>
+							</thead>
+							<tbody>
+								#foreach($custom in $currentPage.pageItems)
+								<tr id="$custom.id" data-custype="$custom.custype" 
+								#if($custom.parid) data-parid="$custom.parid" #end 
+								#if($custom.cityid) data-cityid="$custom.cityid" #end
+								#if($custom.lat) data-lat="$custom.lat" #end 
+								#if($custom.lon) data-lon="$custom.lon" #end
+								#if($custom.custshort) data-custshort="$custom.custshort" #end
+								#if($custom.fuheName) data-fuheName="$custom.fuheName" #end
+								#if($custom.kpName) data-kpName="$custom.kpName" #end
+								#if($custom.skName) data-skName="$custom.skName" #end
+								#if($custom.isorg) data-isorg="$custom.isorg" #end
+								>
+									<!-- <td>$!{velocityCount}</td> -->
+									<td name="cusname" title="$custom.id">$custom.cusname</td>
+									<td name="code">$custom.code</td>
+									<!-- <td name="custshort">$custom.custshort</td> -->
+									<td name="typename" class="nowrap">$custom.typename</td>
+									<td name="sh">$custom.sh</td>
+									<td name="phone">$custom.phone</td>
+									<td name="addr"  style="display: none;">$custom.addr</td>
+									<td name="tcname" class="nowrap">$custom.tcname</td> 
+									<td name="remark1" style="display: none;">#if($custom.remark1) $custom.remark1 #end</td>
+									<td name="remark2"  class="tdTxt" style="padding-bottom:0;" title="#if($custom.remark2) $custom.remark2 #end">#if($custom.remark2) $custom.remark2 #end</td>
+									#if (!($null.isNull($button) || $button.size()==0))
+										<td class="nowrap">
+											#if(${button.get('cb:update')})<a data-toggle="modal" class="reviseShop">${button.get('cb:update')}</a> #end 
+											#if(${button.get('cb:delete')})<a class="del">${button.get('cb:delete')}</a>#end
+											#if(${button.get('cb:setmeal')})<a class="setMeal">${button.get('cb:setmeal')}</a> #end 
+											#if(${button.get('cb:set')})<a class="setConfig">${button.get('cb:set')}</a> #end
+											#if(${button.get('cb:wxacode')})<a class="wxacode">${button.get('cb:wxacode')}</a> #end
+										</td> 
+									#end
+								</tr>
+								#end
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="setmealmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<form id="roleForm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">套餐选择</h4>
+								</div>
+								<div class="modal-body">
+									<div>
+										当前套餐 : <span id="tcname"></span>
+									</div>
+									<p></p>
+									<input type="hidden" name="id">
+									<div class="form-group">
+										<table id='table' class='table table-striped table-bordered table-hover' style="text-align: center;">
+											<thead>
+												<tr>
+													<th width='*' style="text-align: center;"></th>
+													<th width='*' style="text-align: center;">套餐名称</th>
+													<th width='*' style="text-align: center;">套餐类别</th>
+													<th width='*' style="text-align: center;">价格</th>
+													<th width='*' style="text-align: center;">张数</th>
+												</tr>
+											</thead>
+											<tbody>
+												#foreach($tc in $listTcinfo)
+												<tr>
+													<td><input type="radio" name="tc" id="$tc.id" value="$tc.price"></td>
+													<td name="tcname">$tc.tcname</td>
+													<td name="type">$tc.typename</td>
+													<td name="price">$tc.price</td>
+													<td name="price">$tc.tcnum</td>
+												</tr>
+												#end
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+									<button type="button" class="btn btn-primary" id="subsetMeal">保存</button>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</form>
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
+
+				<div class="panel-footer">#parse("share/pagination.html")</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+	<script src="#springUrl('')/Content/admin/js/page/custom.js" type="text/javascript" charset="UTF-8"></script>
+	<script type="text/javascript">
+		var getUrl = '#springUrl('')/custombase/getCustombaseByCode';
+		
+		$(function() {
+			//保存商户
+			$("#subCustom").on("click",function() {
+				var custype=$('#custype-form').val();
+				var parid=$('#parid').val();
+				$("#customForm").bootstrapValidator('validate'); //提交验证  
+				if ($("#customForm").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码  
+					if(custype==104&&parid==0){
+						Ewin.alert({ message: "所属集团必须选择!" }).on(function (evel) {});
+						return false;
+					}
+					//提交
+					var url = "#springUrl('')/custombase/saveCustombase",
+						dataObj = $("#customForm").serialize();
+					sub(dataObj,url);
+				}
+			});
+
+			//删除
+			$(".del").on("click",function() {
+					var url = "#springUrl('')/custombase/deleteCustombase",
+						customId = $(this).parents("tr").attr("id");
+					del(customId, url);
+			});
+			
+			//提交套餐
+			$("#subsetMeal").on("click",function(){
+					var customId = $('#setmealmodal input[name="id"]').attr("value"),
+						tcId = $('#setmealmodal input[name="tc"]:checked ').attr("id"),
+						tcprice = $('#setmealmodal input[name="tc"]:checked ').attr("value"),
+						url = "#springUrl('')/custombase/savetTccustominfo",
+						dataObj = { "id":customId, "tcid":tcId, "tcprice":tcprice };
+					//提交
+					sub(dataObj,url);
+			});
+			$(".setConfig").on("click",function(){
+				var id = $(this).parents("tr").attr("id");
+				window.location = "#springUrl('')/view/custombaseConfigIndex?id="+id;
+			})
+			
+			//生成小程序码
+			$(".wxacode").click(function(){
+				var id = $(this).parents("tr").attr("id");
+				var url = "#springUrl('')/custombase/getCuswxacode";
+				jQuery.ajax({
+					url : url,
+					dataType : "json",
+					data :  {"cusid":id},
+					type : "post",
+					success : function(result) {
+						console.log(result);
+						Ewin.alert({ message: result.msg }).on(function (evel) {
+							 if(result.code==1){
+								 window.location.reload();
+							 }
+						 });
+					}
+			   });
+			});
+		});
+		
+		
+
+		/* 选择类别  时 判断所选在择的类型 代入集团 */
+				function changeType(custype,parid,org){
+					console.log("custype:"+custype);
+						//如果选择的 非集团类型  就要把所有集团类的商户带出来
+						var isorg = $('#custype-form').find("option:selected").attr("isorg");
+						console.log("是否是集团："+isorg  +"  org:"+org);
+						 if(isorg==0||org==0){
+							 var url='#springUrl('')/custombase/getCustombaseByOrg';
+							 jQuery.post(url,{},function(result){
+								 console.log(result);
+								 if(result.status){
+									 var org=result.orgList;
+									 console.log(org);
+									 var str=' <label>所属集团</label>'
+									 		+'<select class="form-control" name="parid" id="parid" onchange="changeOrg(this.value,\'\')">'
+									 	    +'<option value="0">-----请选择-----</option>';
+									 jQuery.each(org, function(i, obj){
+										 if(parid!=''&&obj.id==parid){
+										 	 str+='<option value="'+obj.id+'"  selected="selected">'+obj.cusname+'</option>';
+										 }else{
+											 str+='<option value="'+obj.id+'">'+obj.cusname+'</option>';
+										 }
+									  });
+									 	str+='</select>';
+									$('#parCustombase').empty();
+									$('#parCustombase').append(str);
+							     }
+							 },'json');
+						}
+						 else{
+							 $('#parCustombase').empty();
+                             $('#city-group').empty();
+						 }
+				}
+				
+
+				/* 选择集团时代入 集团下的城市 */
+				function changeOrg(parid,cityid){
+					 console.log("parid===="+parid);
+					if(parid!=0&&parid!=''&&parid!='undefined'&&parid!=null){
+						var cusid=parid;
+						 var url='#springUrl('')/custombase/getCuscityBycusid'
+							 jQuery.post(url,{cusid:cusid},function(result){
+								 console.log(result);
+								 if(result.status){
+									 var city=result.cuscityList;
+									 console.log(city);
+									 var str=' <label>所在城市</label>'
+									 		+'<select class="form-control" name="cityid" id="cityid">';
+									 		/* +'<option value="">-----请选择城市------</option>'; */
+									 jQuery.each(city, function(i, city){
+										 if(cityid!=''&&city.id==cityid){
+											 str+='<option value="'+city.id+'" selected="selected" >'+city.cityname+'</option>';
+										 }else{
+											 str+='<option value="'+city.id+'">'+city.cityname+'</option>';
+										 }
+									  });
+									 	str+='</select>';
+									$('#city-group').empty();
+									$('#city-group').append(str);
+							     }
+							 },'json');
+					}
+					else{
+						 $('#city-group').empty();	
+					}
+				}
+	</script>
+
+	</body>
+	</html>

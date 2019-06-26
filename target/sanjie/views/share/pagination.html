@@ -1,0 +1,66 @@
+
+#if($currentPage.pagesAvailable>=1)
+<div class="form-inline">
+	#if($currentPage.pageNumber==1) <button class="btn btn-page" style="color:#ccc;" contenteditable="false">上一页</button> #else <button class="btn btn-page" onclick="gop(($currentPage.pageNumber)-1)">上一页</button> #end
+
+	<span id="page">
+	   </span>
+
+	#if($currentPage.pageNumber>=$currentPage.pagesAvailable) <button class="btn btn-page" style="color:#ccc;" contenteditable="false">下一页</button> #else <button class="btn btn-page" onclick="gop($currentPage.pageNumber+1)">下一页</button> #end
+
+	<span class="page-skip">共$currentPage.pagesAvailable页， 到第
+	   <input type="text" class="form-control" id="gopage" style="width:70px;text-align:center;" value=""
+			  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+			  onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"> 页
+	   <button class="btn btn-default" onclick="gop($('#gopage').val());">跳转</button></span>
+</div>
+#end
+<script type="text/javascript">
+    var pageNumber = $currentPage.pageNumber; //当前页
+    var pagesAvailable = $currentPage.pagesAvailable;  //总页数
+    //var pagesAvailable = 7;  //总页数
+    var count = 5;  //显示页数
+    var html = "<span>";
+    if( pagesAvailable < count+2 ){
+        for(var i=1; pagesAvailable >= i ; i++){
+            if( pageNumber != i ){
+                html += "<button class='btn btn-page' onclick='gop("+i+")'>"+i+"</button>";
+            }else{
+                html += "<button class='btn btn-onpage'>"+i+"</button>";
+            }
+        }
+        html += "</span>";
+    }else{
+        if( pageNumber < count ){   //取前面
+            for(var i=1; count >= i ; i++){
+                if( pageNumber != i ){
+                    html += "<button class='btn btn-page' onclick='gop("+i+")'>"+i+"</button>";
+                }else{
+                    html += "<button class='btn btn-onpage'>"+i+"</button>";
+                }
+            }
+            html += "<button class='btn btn-page'>...</button><button class='btn btn-page' onclick='gop("+pagesAvailable+")'>"+pagesAvailable+"</button></span>";
+        }else if( pageNumber >= count && pagesAvailable-count >= pageNumber){   //取中间
+            html += "<button class='btn btn-page' onclick='gop(1)'>1</button><button class='btn btn-page'>...</button>";
+            for(var i=pageNumber-2; pageNumber+2 >= i ; i++){
+                if( pageNumber != i ){
+                    html += "<button class='btn btn-page' onclick='gop("+i+")'>"+i+"</button>";
+                }else{
+                    html += "<button class='btn btn-onpage'>"+i+"</button>";
+                }
+            }
+            html += "<button class='btn btn-page'>...</button><button class='btn btn-page' onclick='gop("+pagesAvailable+")'>"+pagesAvailable+"</button></span>";
+        }else if(pageNumber > pagesAvailable-count && pagesAvailable >= pageNumber){
+            html += "<button class='btn btn-page' onclick='gop(1)'>1</button><button class='btn btn-page'>...</button>";
+            for(var i=pagesAvailable-(count-1); pagesAvailable >= i ; i++){
+                if( pageNumber != i ){
+                    html += "<button class='btn btn-page' onclick='gop("+i+")'>"+i+"</button>";
+                }else{
+                    html += "<button class='btn btn-onpage'>"+i+"</button>";
+                }
+            }
+        }
+    }
+
+    $("#page").append(html);
+</script>

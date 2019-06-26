@@ -1,0 +1,389 @@
+<div class="loading modal-backdrop fade in"></div>
+<div class="loading modal fade in">
+    <div class="modal-dialog modal-sm loadingBox">
+        <div class="modal-content">
+            <img src="#springUrl('')/Content/admin/images/loading.gif">
+            <span>请稍候...</span>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="">
+                <div class="logo">
+                    <img src="#springUrl('')/Content/admin/images/ysLogo.png" style="width:30px;">
+                </div>
+                <div class="navbar-brand">
+                    $u.cusName
+                </div>
+            </a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+            <!--<li style="color:#ffffff;font-size: 18px;cursor:pointer;" >$u.cusName</li>-->
+            <!--<li class="dropdown">
+               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                   <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+               </a>
+               <ul class="dropdown-menu dropdown-alerts">
+                   <li>
+                       <a href="#">
+                           <div>
+                               <i class="fa fa-comment fa-fw"></i> 您有新短消息
+                               <span class="pull-right text-muted small">1小时前</span>
+                           </div>
+                       </a>
+                   </li>
+               </ul>
+           </li>-->
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i> $u.username <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <!--href="#springUrl('')/view/updatePasswordIndex"-->
+                    <li><a href="#springUrl('')/view/accountIndex"><i class="fa fa-user fa-fw"></i>我的账号</a>
+                    <li class="divider"></li>
+                    <li><a  data-toggle="modal" data-target="#pwdModel"  ><i class="fa fa-user fa-fw"></i>修改密码</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="javascript:logout();"><i class="fa fa-sign-out fa-fw"></i>注销</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar customNav dhTime" id="customNav" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+
+                <ul class="nav" id="side-menu">
+                    #foreach($u in $MenuList)
+                    <li #if($u.checked== 1) class="active" #end>
+                        <a href="javascript:zsub($u.fid);" name="$u.fid"
+                           #if(!($u.subfun))
+                           #set($ulink="#springUrl('')/" +$u.control+"/"+$u.action)  onclick="Jump('${ulink}')"
+                        #end >
+                        <i class="fa $u.logo fa-fw my-navfa"></i> $u.name #if($u.subfun)<span class="fa arrow my-navfont">#end</span>
+                        </a>
+
+                        <ul class="nav nav-second-level secondLevel collapse #if($u.checked == 1) in #end" id="mslv$u.fid">
+                            #if($u.subfun)
+                            #foreach($m in $u.subfun)
+                            <li id="$m.fid">
+                                #set($ulink="#springUrl('')/"+$m.control+"/"+$m.action)
+                                <a href="javascript:void(0);" onclick="Jump('${ulink}')" name="$m.fid" #if($m.checked== 1) class="active" #end><span class="item">$m.name</span></a>
+                            </li>
+                            #end
+                            #end
+                        </ul>
+                    </li>
+                    #end
+                </ul>
+
+            </div>
+            <!-- /.sidebar-collapse -->
+            <div class="cutbox">
+                <div id="cutUp" class=""><i class="fa fa-arrow-circle-right fa-fw my-navfa"></i><span class="cutSpan">收起导航栏</span></div>
+            </div>
+
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="pwdModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="userPasswordForm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="fid">
+                        <div class="form-group">
+                            <label>用户名称</label>
+                            <input type="hidden" name="username" value="$u.username">
+                            <input class="form-control" value="$u.username" disabled>
+                            <div class="col-lg-4 my-ps1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>原始密码</label>
+                            <input class="form-control" name="password" type="password" placeholder="请输入原密码">
+                            <div class="col-lg-4 my-ps2"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>原始密码</label>
+                            <input class="form-control" name="pone" type="password"   placeholder="请输入新密码">
+                            <div class="col-lg-4 my-ps3"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>确认密码</label>
+                            <input class="form-control" name="ptwo"  type="password"  placeholder="请确认新密码">
+                            <div class="col-lg-4 my-ps4"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="savePassword">保存</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </form>
+
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <script type="text/javascript">
+        var flvId = $pfid;	//当前一级目录
+        var tlvId = $fid; //当前二级菜单 有可能为空
+
+        //页面监控size
+        function winSize() {
+            $(window).bind("load resize", function () {
+                var topOffset = 61;
+                var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+                if (width < 768) {
+                    $('div.navbar-collapse').addClass('collapse');
+                    topOffset = 100; // 2-row-menu
+                } else {
+                    $('div.navbar-collapse').removeClass('collapse');
+                }
+
+                var height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
+                height = height - topOffset;
+                if (height < 1) height = 1;
+                if (height > topOffset) {
+                    $("#page-wrapper").css("min-height", (height) + "px");
+                    //var h = document.body.scrollHeight+1;
+                    var h = $(window).height();
+                    var w = document.body.clientWidth;
+
+                    if (w > 767) {
+                        //console.log(w)
+                        $("#customNav").css("min-height", (h - topOffset) + "px");
+                    } else {
+                        $("#customNav").css("min-height", "0px");
+                    }
+                }
+            });
+        }
+
+
+        $(function () {
+            //菜单栏展开隐藏
+            var showMeun = function (show) {
+                var flv = "#mslv" + flvId;
+                if (show) {
+                    $(flv).addClass('collapse in').css("height", "auto");
+                    $(flv).find("li[id='" + tlvId + "']").parents("li").addClass('active');
+                    $(flv).find("li[id='" + tlvId + "']").children("a").addClass('active');
+                } else {
+                    $("#side-menu ul").removeClass('in');
+                    $(flv).find("li[id='" + tlvId + "']").parents("li").removeClass('active');
+                    $(flv).find("li[id='" + tlvId + "']").children("a").removeClass('active');
+                }
+            }
+            /*if(tlvId){
+                showMeun(true)
+            }*/
+
+            $('#side-menu').metisMenu();
+
+            winSize();
+
+            if (false) {
+                //console.log(tlvId)
+                var url = window.location;
+                // var element = $('ul.nav a').listener(function() {
+                //     return this.href == url;
+                // }).addClass('active').parent().parent().addClass('in').parent();
+                var element = $('ul.nav a').filter(function () {
+                    //console.log(this.name)
+                    return this.name == tlvId;
+                }).addClass('active').parent();
+
+                while (true) {
+                    if (element.is('li')) {
+                        element = element.parent().addClass('in').parent();
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+
+            //显示隐藏菜单栏
+            var show = true;
+            var showCut = function (show) {
+                if (show) {
+                    $("#cutUp i").addClass("cutUp");
+                    $("#customNav").addClass("cut-sidebar");
+                    $("#customNav li a,.cutbox").addClass("cut-li");
+                    $("#page-wrapper").addClass("cut-page");
+                } else {
+                    $("#cutUp i").removeClass("cutUp");
+                    $("#customNav").removeClass("cut-sidebar");
+                    $("#customNav li a,.cutbox").removeClass("cut-li");
+                    $("#page-wrapper").removeClass("cut-page");
+                }
+                var htmlstr = show ? "打开导航栏" : "收起导航栏";
+                $(".cutSpan").html(htmlstr);
+
+            }
+            $(".cutbox").click(function (e) {
+                if (show) {
+                    showCut(show);
+                    showMeun(false);
+                    show = false;
+                } else {
+                    showCut(show);
+                    showMeun(true);
+                    show = true;
+                }
+            });
+
+            $("#customNav").hover(function () {
+                if (!show) {
+                    $(this).css("width", "200px")
+                    showMeun(true);
+                }
+            }, function () {
+                if (!show) {
+                    $(this).css("width", "60px")
+                    showMeun(false);
+                }
+            })
+
+        });
+
+        /*
+        $(function() {
+            var tn = "#mslv"+nlv;
+            $(tn).removeClass('collapse');
+        });*/
+
+        //展开自菜单
+        /*function zsub(sel){
+            var tn = "#mslv"+sel;
+            var otn = "#mslv"+nlv;
+
+            $(otn).addClass('collapse');
+            $(tn).removeClass('collapse');
+
+            nlv = sel;
+
+            var test = $("#side-menu").find("ul").length;
+            console.log(test);
+        }*/
+
+        //注销
+        function logout() {
+            window.location = "#springUrl('')/user/loginout";
+        }
+
+        function Jump(url) {
+            window.location = url;
+
+            /*window.open(url);*/
+        }
+
+
+        //用户修改密码表单验证
+        $("#userPasswordForm").bootstrapValidator({
+            live: 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+            submitButtons: '#savePassword',//指定提交按钮
+            message: '验证失败',
+            feedbackIcons: {//根据验证结果显示的各种图标
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    container: '.my-ps1',
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '用户名称必须输入'
+                        }
+                    }
+                },
+                password: {
+                    container: '.my-ps2',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '请输入原密码'
+                        }
+                    }
+                },
+                pone: {
+                    container: '.my-ps3',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '请输入新密码'
+                        }
+                    }
+                },
+                ptwo: {
+                    container: '.my-ps4',
+                    validators: {
+                        notEmpty: {//检测非空
+                            message: '请输入确认密码'
+                        },
+                        identical: {
+                            field: 'pone',
+                            message: '两次输入的密码不相符'
+                        }
+                    }
+                }
+            }
+        });
+        //保存 密码
+        $("#savePassword").click(function () {
+            $("#userPasswordForm").bootstrapValidator('validate'); //提交验证
+            if ($("#userPasswordForm").data('bootstrapValidator').isValid()) {
+                //保存
+                jQuery.ajax({
+                    url: "#springUrl('')/user/updatePassword",
+                    dataType: "json",
+                    data: $("#userPasswordForm").serialize(),
+                    type: "post",
+                    asyn: false,
+                    success: function (result) {
+                        console.log(result);
+                        //window.location.reload();
+                        if (result.code == "1") {
+                            Ewin.alert({message: result.msg}).on(function (e) {
+                                if (!e) {
+                                    return;
+                                }
+                                window.location = "#springUrl('')/view/index";
+                            });
+                        }else {
+                            Ewin.alert({message:  result.msg}).on(function (evel) { });
+                            return false;
+                        }
+                    }
+                });
+            }
+
+        });
+
+
+    </script>

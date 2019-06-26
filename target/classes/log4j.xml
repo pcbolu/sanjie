@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+					 debug="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					 xsi:schemaLocation="http://jakarta.apache.org/log4j/ ">
+	<!--系统日志输出到文件-->
+	<appender name="systemAppender_file" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/system.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m  %n"/>
+		</layout>
+	</appender>
+
+	<!--调试日志输出到文件-->
+	<appender name="Appender_NPI" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/NET.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_FileScanner" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/FileScanner.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_FileParser" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/FileParser.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Searcher" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Searcher.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Searcher15" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Searcher15.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Task" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Task.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Stat" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Stat.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Stat15" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Stat15.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_WeekReport" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/WeekReport.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_DayReport" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/DayReport.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Decoder" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Decoder.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+	<appender name="Appender_Cdd" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/sanjie/Cdd.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+
+	<appender name="FtpAppender"
+			  class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/ftp/ftp.log"/>
+		<!--每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH; 每分钟:'.'yyyy-MM-dd-HH-mm-->
+		<param name="DatePattern" value="'.'yyyy-ww"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m  %n"/>
+		</layout>
+	</appender>
+
+	<appender name="DownloadedAppender"
+			  class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/ftp/Downloaded.log"/>
+		<!--每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH; 每分钟:'.'yyyy-MM-dd-HH-mm-->
+		<param name="DatePattern" value="'.'yyyy-ww"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+
+	<appender name="SchedulerAppender"
+			  class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/ftp/scheduler.log"/>
+		<!--每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH; 每分钟:'.'yyyy-MM-dd-HH-mm-->
+		<param name="DatePattern" value="'.'yyyy-ww"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+
+	<appender name="DownloadingAppender"
+			  class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/ftp/Downloading.log"/>
+		<!--每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH; 每分钟:'.'yyyy-MM-dd-HH-mm-->
+		<param name="DatePattern" value="'.'yyyy-ww"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+
+	<appender name="Appender_SmartOpt" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/net/SmartOpt.log"/>
+		<!--
+			每月:'.'yyyy-MM; 每周:'.'yyyy-ww; 每天:'.'yyyy-MM-dd; 每小时:'.'yyyy-MM-dd-HH;
+			每分钟:'.'yyyy-MM-dd-HH-mm
+		-->
+		<param name="DatePattern" value="'.'yyyy-ww-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p %C.%M %L行 - %m %n"/>
+		</layout>
+	</appender>
+
+	<!--输出到控制台-->
+	<appender name="stdoutAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %C.%M %L-%m %n"/>
+		</layout>
+	</appender>
+
+	<root>
+		<priority value="INFO"/>
+		<appender-ref ref="Appender_NPI"/>
+		<appender-ref ref="stdoutAppender"/>
+	</root>
+
+</log4j:configuration>

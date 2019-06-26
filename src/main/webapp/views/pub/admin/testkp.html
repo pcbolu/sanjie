@@ -1,0 +1,379 @@
+#parse("share/header.html")
+
+<div id="page-wrapper" class="pageBg">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">开票测试</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="xm12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-right">
+                        <!-- Button trigger modal -->
+                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal" id="addTc">添加开票信息</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="width:800px;">
+                                <form id="tcForm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">添加开票信息</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id">
+
+                                            <h4>微信推送方式</h4>
+                                            <div class="col-lg-12">
+                                                <!-- <div class="form-group col-lg-6" >
+                                                        <label class="col-lg-4 account-label"  align="right">输入号码：</label>
+                                                        <div class="col-lg-8">
+                                                            <input class="form-control"  name="phone"   placeholder="请输入微信会员电话号码"   autoComplete="off">
+                                                        </div>
+                                                </div> -->
+
+                                                <div class="form-group col-lg-6" >
+                                                    <label class="col-lg-4 account-label"  align="right">输入车牌号码：</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control"  name="cphm"   placeholder="请输入绑定的车牌号码"   autoComplete="off" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4>测试类型</h4>
+                                            <div class="col-lg-12">
+                                                <div class="form-group col-lg-6" >
+                                                    <label class="col-lg-4 account-label"  align="right">选择测试类型：</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control"  name="type" id="type">
+                                                            <option value="0" >支付 + 开票</option>
+                                                            <option value="1" >开票</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <h4>商品明细：</h4>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label"  align="right">商品1：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="proname"  id="proname"   value="保温杯"  placeholder="商品1"  autoComplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label" align="right">数量：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control" onchange="countPrice()"  name="pnum"  id="pnum" value="1" placeholder="数量" autoComplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label"  align="right">价格：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control" onchange="countPrice()" name="price" id="price" value="60" placeholder="价格"  autoComplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label" align="right">税率(%)：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control" name="sl" id="sl" value="6"  disabled>
+                                                </div>
+                                            </div>
+
+                                            <h4>开票信息</h4>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label"  align="right">商户名称：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="cusid"   type="hidden"  id="cusid"    value="$cb.id"   >
+                                                    <input class="form-control"  name="cusname"   value="$cb.cusname"   disabled>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label"  align="right">合计：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="jshj"  id="hj"  placeholder="合计"  disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label" align="right">金额：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="je" id="je" placeholder="金额"  disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label"  align="right">税额：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="se" id="se" placeholder="税额"  disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label" align="right">备注：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="bz" placeholder="备注"  autoComplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6" >
+                                                <label class="col-lg-4 account-label"  align="right">类型：</label>
+                                                <div class="col-lg-8">
+                                                    <input class="form-control"  name="optype" value="1" placeholder="类型"  disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary" id="subTc">保存</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </form>
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                    </div>
+                    <form method="post" id="formid" action="#springUrl('')/fpview/testkpIndex">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <div class="field">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="pageNumber" id="pageNumber" type="hidden" value="1">
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+
+                        <table id='table' class='table table-striped table-bordered table-hover' style="text-align: center;">
+                            <thead>
+                            <tr>
+                                <th width='*' style="text-align: center;">序号</th>
+                                <th width='*'  style="text-align: center;">商户名称</th>
+                                <th width='*'  style="text-align: center;">支付状态</th>
+                                <th width='*'  style="text-align: center;">订单金额</th>
+                                <th width='*'  style="text-align: center;">创建时间</th>
+                                <th width='*'  style="text-align: center;">订单状态</th>
+                                <th width='*'  style="text-align: center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--  o.id,o.cusid,c.cusname,o.paysta,o.paytype,o.totalmon,o.createtime,o.sta -->
+
+                            #foreach($kpinfo in $currentPage.pageItems)
+                            <tr id="$order.id">
+                                <td id="QRid" name="$kpinfo.id">$!{velocityCount}</td>
+                                <td name="tcname">$kpinfo.cusname</td>
+                                <td name="type">
+                                    #if($kpinfo.zfbz==0 )
+                                    未支付
+                                    #elseif($kpinfo.zfbz==1)
+                                    已支付
+                                    #elseif($kpinfo.zfbz==2)
+                                    退款
+                                    #else
+                                    未知状态
+                                    #end
+                                </td>
+                                <td name="price">$kpinfo.jshj</td>
+                                <td name="price">$kpinfo.createtime</td>
+                                <td name="price">
+                                    #if($kpinfo.zfbz==0 && $kpinfo.kpbz==0)
+                                    未支付
+                                    #elseif($kpinfo.zfbz==1 &&$kpinfo.kpbz==0)
+                                    待申请
+                                    #elseif($kpinfo.zfbz==1 && $kpinfo.kpbz==1)
+                                    已申请
+                                    #elseif($kpinfo.zfbz==1 && $kpinfo.kpbz==2)
+                                    已完成
+                                    #elseif($kpinfo.zfbz==1 && $kpinfo.kpbz==3)
+                                    已冲红
+                                    #elseif($kpinfo.zfbz==2)
+                                    退款
+                                    #else
+                                    未知状态
+                                    #end
+                                </td>
+                                <td><a class="QRcode" data-toggle="modal" data-target="#QRModal">二维码</a></td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="QRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="width:400px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">二维码扫描</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id">
+                                <div class="col-lg-12" id="QRimg" style="text-align:center;margin:40px 27px;">
+                                    <!-- <img src="#springUrl('')/Content/admin/images/loading.gif"/> -->
+                                    <p style="margin-left: -27px;">请使用微信扫描二维码</p>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+                <div class="panel-footer">
+                    #parse("share/pagination.html")
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="#springUrl('')/Content/Scripts/qrcode.min.js" type="text/javascript" ></script>
+
+    <script type="text/javascript">
+    	var baseurl = "$baseurl";
+    
+    	var qrcode = new QRCode(document.getElementById("QRimg"), {
+	    	width : 300,
+	    	height : 300
+	    });
+    	
+        //计算
+        var countPrice = function(){
+            var pnum = $("#pnum").val(),  //数量
+                price = $("#price").val(),  //单品价格
+                total = Number(pnum) * Number(price),  //金额
+                shuie = Number(total) * 0.06,   //税额
+                jine = total + shuie;  //合计
+            $("#hj").val(jine.toFixed(2));
+            $("#je").val(total.toFixed(2));
+            $("#se").val(shuie.toFixed(2));
+        }
+        $(function() {
+            $("#addTc").one("click",function() {
+                $('#myModal').one('shown.bs.modal',function() {
+                    $(this).find("select[name='type']").find("option").removeAttr("selected");
+                });
+                $('#myModal').one('hide.bs.modal',function() {
+                    $(this).find("select[name='type']").find("option:first").prop("selected", 'selected');
+                });
+            });
+            
+            $(".QRcode").on("click",function() {
+                var QRid = $(this).parents("tr").find("#QRid").attr("name");
+                $('#QRModal').one('shown.bs.modal',function() {
+                    $(this).find("select[name='type']").find("option").removeAttr("selected");
+                    /* $("#QRimg").find("img").attr("src","http://qr.liantu.com/api.php?text=https://open.weixin.qq.com/connect
+                    		/oauth2/authorize?appid=wx5259e866cf00d5fc%26redirect_uri=http%3A%2F%2Fwww.taxunite.com%2
+                    				Ffpyuns%2Fwap%2Fgetkpinfo%26response_type=code%26scope=snsapi_userinfo%26state="+
+                    				QRid+"%26connect_redirect=1#wechat_redirect"); */
+                    
+                   //获取微信用户的信息
+                   /*  var qrstr = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5259e866cf00d5fc&"
+                    		 +"redirect_uri=http://www.taxunite.com/fpyuns/wap/getkpinfo&response_type=code&scope=snsapi_userinfo&state="
+                				+QRid+"&connect_redirect=1#wechat_redirect"; */
+                   
+                   //获取微信用户的信息，直接跳相应的页面
+                   var qrstr = baseurl + "/wap/kpqrcodego?qrid=" + QRid; 
+                    				
+                    qrcode.makeCode(qrstr);
+                });
+                $('#QRModal').one('hide.bs.modal',function() {
+                    $(this).find("select[name='type']").find("option:first").prop("selected", 'selected');
+                    /* $("#QRimg").find("img").attr("src","#springUrl('')/Content/admin/images/loading.gif"); */
+                });
+            });
+
+            countPrice();
+
+            $("#tcForm").bootstrapValidator({
+                live : 'enabled',
+                excluded : [ ':disabled', ':hidden',':not(:visible)' ],
+                submitButtons : '#subTc',
+                message : '验证失败',
+                feedbackIcons : {
+                    valid : 'glyphicon glyphicon-ok',
+                    invalid : 'glyphicon glyphicon-remove',
+                    validating : 'glyphicon glyphicon-refresh'
+                },
+                fields : {
+                    cphm : {
+                        validators : {
+                            notEmpty : {
+                                message : '车牌号码必须输入'
+                            }
+                        }
+                    }
+                }
+            });
+
+            $("#subTc").click(function() {
+                $("#tcForm").bootstrapValidator('validate'); //提交验证
+                if ($("#tcForm").data('bootstrapValidator').isValid()) {
+                    //var phone=$('#tcForm input[name="phone"]').val(),
+                    var cphm=$('#tcForm input[name="cphm"]').val(),
+                        type=$('#type').val(),
+                        cusid=$('#cusid').val(),
+                        jshj = $('#tcForm input[name="jshj"]').val(),
+                        je=$('#tcForm input[name="je"]').val(),
+                        se = $('#tcForm input[name="se"]').val(),
+                        bz = $('#tcForm input[name="bz"]').val(),
+                        optype=$('#tcForm input[name="optype"]').val();
+
+                    var obj=[];
+                    var detail={
+                        proid : 'goosid',
+                        proname : $('#proname').val(),
+                        pnum : $('#pnum').val(),
+                        price : $('#price').val(),
+                        sl : $('#sl').val()
+                    }
+                    obj.push(detail);
+
+                    var jsonStr = JSON.stringify(obj);
+                    var data={
+                        cphm:cphm,
+                        type:type,
+                        cusid:cusid,
+                        jshj:jshj,
+                        je:je,
+                        se:se,
+                        bz:bz,
+                        sl: $('#sl').val(),
+                        optype:optype,
+                        kpdetailstr:jsonStr
+                    }
+
+                    jQuery.ajax({
+                        url : "#springUrl('')/api/kporderform",
+                        dataType : "json",
+                        data : data,
+                        type : "post",
+                        asyn : false,
+                        success : function(result) {
+                            console.log(result);
+                            if (result.status == true) {
+                                window.location.reload();
+                            }
+                            else{
+                                Ewin.alert({ message:result.msg}).on(function (e) {
+                                    return ;
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    #parse("share/footer.html")

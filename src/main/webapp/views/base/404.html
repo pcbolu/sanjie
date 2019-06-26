@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>$SysName</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="#springUrl('')/Content/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="#springUrl('')/Content/admin/bower_components/metisMenu/dist/metisMenu.css" rel="stylesheet">
+
+     <!-- Custom CSS -->
+    <link href="#springUrl('')/Content/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    
+    <!-- 自定义 -->
+    <link href="#springUrl('')/Content/admin/css/admin-my.css" rel="stylesheet" type="text/css"> 
+
+     <!-- Custom Fonts -->
+    <link href="#springUrl('')/Content/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> 
+</head>
+
+<body class="abody">
+    <div class="container abody">
+        <div class="row">
+          <div class="main_container">
+            <!-- page content -->
+            <div class="col-md-12">
+              <div class="col-middle">
+                <div class="text-center text-center">
+
+                  #if($msg)
+                    <h1 class="error-number">500</h1>
+                   <h2>$msg</h2>
+                  #else
+                    <h1 class="error-number">404</h1>
+                     <h2>对不起，我们找不到这个页面</h2>
+                  #end
+               
+                  <p style="margin-top:30px;font-size:16px;"> <a href="#springUrl('')/admin/index">回到首页?</a>
+                  </p>
+                  <div class="mid_center">
+                    	#if($errormsg)
+                        <div  style="width: 100%; min-height: 100px; border: 1px #ffffff solid; margin-top: 60px; text-align: left;  padding: 10px">错误信息： $errormsg  </div>
+                   		#end
+                  </div>
+                 
+                </div>
+              
+              </div>
+            </div>
+            <!-- /page content -->
+          </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="#springUrl('')/Content/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="#springUrl('')/Content/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="#springUrl('')/Content/admin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="#springUrl('')/Content/admin/dist/js/sb-admin-2.js"></script>
+</body>
+
+</html>

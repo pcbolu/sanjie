@@ -1,0 +1,44 @@
+#macro(Header)
+		<!-- header -->
+		<div data-role="header" data-position="fixed" data-theme="a">
+			<h1>微商店</h1>
+			<a href="#menu" data-icon="bars" data-iconpos="notext">菜单</a>
+			<a href="#search" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">查询</a>
+		</div>
+		<!-- /header -->
+		
+	<div data-role="panel" id="search" data-position="right"
+		data-display="overlay" data-theme="a">
+		<ul data-role="listview">
+			<li data-icon="back"><a href="#" data-rel="close">关闭</a></li>
+			<li>菜单一</li>
+			<li>菜单二</li>
+			<li>菜单三</li>
+		</ul>
+	</div>
+
+	<div data-role="panel" data-display="overlay" id="menu" data-theme="a">
+		<ul data-role="listview">
+			<li data-icon="back"><a href="#" data-rel="close">关闭</a></li>
+			<li>菜单一</li>
+			<li>菜单二</li>
+			<li>菜单三</li>
+		</ul>
+	</div>
+#end
+
+#macro(Footer $selectedIdex)
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#springUrl('')/Front.do?action=main&cmd[pageIndex]=1" #if($selectedIdex==1)class="ui-btn-active ui-state-persist" #end data-transition="flip">首页</a></li>
+					<li><a href="#springUrl('')/Front.do?action=main&cmd[pageIndex]=2" #if($selectedIdex==2)class="ui-btn-active ui-state-persist" #end data-transition="flip">我的订单</a></li>
+					<li><a href="#springUrl('')/Front.do?action=main&cmd[pageIndex]=3" #if($selectedIdex==3)class="ui-btn-active ui-state-persist" #end data-transition="flip">个人信息</a></li>
+				</ul>
+			</div>
+		</div>
+#end
+
+#macro(ready)
+
+#end

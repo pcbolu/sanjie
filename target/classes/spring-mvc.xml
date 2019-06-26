@@ -1,0 +1,96 @@
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+    http://www.springframework.org/schema/mvc  
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+  
+  	<description>Spring公共配置</description>  
+  
+  	<!--检测注解-->  
+  	<context:component-scan base-package="com.bolu.*.ctrl" />
+
+	<!--注入日期格式化对象 直接可以用@DateTimeFormat注解接受日期类型-->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
+
+
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 访问静态资源 -->
+    <mvc:default-servlet-handler />
+    <bean id="velocityConfigurer"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="views/" />
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">file</prop>
+                <prop key="resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="input.encoding">UTF-8</prop>
+
+                <prop key="file.resource.loader.cache">true</prop>
+                <!-- <prop key="file.resource.loader.modificationCheckInterval">2</prop> -->
+                <prop key="velocimacro.library.autoreload">false</prop>
+                <prop key="velocimacro.library">VM.vm</prop>
+                <!-- <prop key="default.contentType">text/html;charset=UTF-8</prop> -->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="true" />
+        <property name="prefix" value="" />
+        <property name="suffix" value=".html" />
+        <property name="requestContextAttribute" value="rc" />
+        <!--开启 Velocity 就设置为true-->
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="numberToolAttribute" value="numberTool"/>
+        <property name="dateToolAttribute" value="date"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <property name="toolboxConfigLocation" value="views/tools.xml" />
+
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 以字节为单位的最大上传文件的大小 -->
+        <property name="maxUploadSize" value="31457280" />
+        <property name="defaultEncoding" value="utf-8" />
+    </bean>
+
+	<!-- 统一 springmvc 异常处理 -->
+	<bean class="com.bolu.base.common.ExceptionHandler" />
+	<!-- 上下文 -->
+	<bean id="springContextHolder" class="com.bolu.base.util.SpringContextHolder" />
+
+
+    <!-- 配置拦截器的作用范围 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/view/*"/>
+            <mvc:mapping path="/carview/*"/>
+           <!--用于指定拦截的url,可以配置多个-->
+            <mvc:exclude-mapping path="/view/index"/>
+            <!--用于指定排除的url,可以配置多个-->
+            <bean id="handlerInterceptorOne"
+                  class="com.bolu.system.interceptor.ViewInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    
+</beans>

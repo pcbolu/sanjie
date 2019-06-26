@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+    <toolbox scope="application">
+      <tool>
+         <key>attrMap</key>
+         <scope>request</scope>
+         <class>java.util.HashMap</class>
+      </tool>
+      <tool>
+	     <key>number</key>
+	     <scope>application</scope>
+	     <class>org.apache.velocity.tools.generic.NumberTool</class>
+	     <parameter name="format" value="#0.0"/>
+	  </tool>
+      
+    </toolbox>

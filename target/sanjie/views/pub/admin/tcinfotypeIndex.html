@@ -1,0 +1,209 @@
+
+#parse("share/header.html")
+
+<div id="page-wrapper" class="pageBg">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header">套餐类别管理</h3>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="xm12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pull-right">
+						
+						<!-- Button trigger modal -->
+						 #if (!($null.isNull($button) || $button.size()==0))
+						 		    #if(${button.get('tctype:add')})
+									 	 <button class="btn btn-default" data-toggle="modal" data-target="#myModal" id="addTc">${button.get('tctype:add')}</button>
+								 #end
+					   #end
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <form id="infoForm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">添加套餐类别</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    	<input type="hidden" name="id">
+                                        <div class="form-group">
+                                            <label class="control-label">套餐类别名称</label>
+                                            <input class="form-control" name="name" placeholder="请输入套餐名称"  autoComplete="off">
+                                        </div>
+					                    <div class="form-group">
+                                            <label class="control-label">套餐有效天数</label>
+                                            <input class="form-control"  name="day" placeholder="请输入套餐价格"  autoComplete="off">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>状态</label>
+					                            <select class="form-control"  name="status">
+					                                <option value="1">有效</option>
+					                                <option value="0">无效</option>
+												</select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">套餐备注</label>
+                                            <input class="form-control"  name="remark" placeholder="请输入套餐备注"  autoComplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary" id="subTc">保存</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->   
+                               </form> 
+                                                       
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                     	<!-- /.modal -->
+                       
+                       
+                    </div>
+                    
+                    <form method="post" id="formid" action="#springUrl('')/view/tcinfotypeIndex">
+                    	<div class="form-inline">
+		                    <div class="form-group">
+		                        <div class="field">
+		                            <input type="text" class="form-control" id="keyword"  #if($infotype.name) value="$infotype.name"  #end   name="name" style="width:166px;"   placeholder="套餐名称">
+		                        </div>
+		                    </div>
+		                    <input type="hidden" name="pageNumber" id="pageNumber" type="hidden" value="1">
+		                    <button class="btn btn-default" type="submit">搜索</button>
+		                </div>
+                    </form>
+                    
+                </div>
+             	<div class="panel-body">
+             		<div class="table-responsive">
+						
+						<table id='table' class='table table-striped table-bordered table-hover' style="text-align: center;">
+							<thead>
+								<tr>
+									<!-- <th width='*' style="text-align: center;">序号</th> -->
+									<th width='*'  style="text-align: center;">套餐类别名称</th>
+									<th width='*'  style="text-align: center;">有效天数</th>
+									<th width='*'  style="text-align: center;">备注</th>
+									<th width='*'  style="text-align: center;">状态</th>
+									    #if (!($null.isNull($button) || $button.size()==0))
+									 <th width='*' style="text-align: center;">操作</th>
+									 #end
+								</tr>
+							</thead>
+							<tbody>
+							#foreach($tcinfotype in $currentPage.pageItems)
+						        <tr id="$tcinfotype.id">
+				        		     <!-- <td>$!{velocityCount}</td> -->
+				        		     <td name="name">$tcinfotype.name</td>
+				        		     <td name="day">$tcinfotype.day</td>
+				        		     <td name="remark">$tcinfotype.remark</td>
+				        		       <td name="status" class="sel" data-statype="$tcinfotype.status">
+					        		       #if($tcinfotype.status==1)
+					        		       		有效
+					        		       #else
+					        		       		无效
+					        		       #end
+				        		       </td>
+				        		       #if (!($null.isNull($button) || $button.size()==0))
+				        		      <td>
+						        		      #if(${button.get('tctype:update')})
+						        		          <a data-toggle="modal" class="reviseTc">${button.get('tctype:update')}</a>
+												#end
+												#if(${button.get('tctype:delete')})
+						        		        	<a class="del")">${button.get('tctype:delete')}</a>
+												#end
+									 </td>
+								    #end 
+				        	    </tr>
+			        	    #end
+							</tbody>
+						</table>
+					</div>
+             	</div>
+             	<div class="panel-footer">
+             		#parse("share/pagination.html")
+             	</div>
+       
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	var Tit = "添加套餐类别",
+    	xTit = "修改套餐类别";
+	$("#addTc").click(function() {
+		playDialog($(this),Tit);
+	});
+	$(".reviseTc").click(function() {
+		reviseDialog($(this),xTit);
+	});
+	$("#infoForm").bootstrapValidator({
+		live : 'enabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证  
+		excluded : [ ':disabled', ':hidden',':not(:visible)' ],//排除无需验证的控件，比如被禁用的或者被隐藏的  
+		submitButtons : '#subTc',//指定提交按钮
+		message : '验证失败',
+		feedbackIcons : {//根据验证结果显示的各种图标  
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			tcname : {
+				validators : {
+					notEmpty : {//检测非空,radio也可用  
+						message : '套餐名称必须输入'
+					},
+					stringLength : {//检测长度  
+						min : 2,
+						max : 30,
+						message : '长度必须在2-30之间'
+					},
+				}
+			},
+			type : {
+				validators : {
+					callback : {//检测非空
+						message : '套餐类别必须选择',
+						callback : function(value,validator) {
+							return value==0?false:true;
+						}
+					}
+				}
+			},
+			price : {
+				validators : {
+					notEmpty : {//检测非空
+						message : '套餐价格必须输入'
+					}
+				}
+			}
+		}
+	});
+	$("#subTc").click(function() {
+		$("#infoForm").bootstrapValidator('validate'); //提交验证  
+		if ($("#infoForm").data('bootstrapValidator').isValid()) { //获取验证结果，如果成功，执行下面代码  
+			//提交
+			var url = "#springUrl('')/tcinfo/saveTcinfoType",
+				dataObj = $("#infoForm").serialize();
+			sub(dataObj,url);
+		}
+	});
+
+	//删除
+	$(".del").click(function() {
+			var url = "#springUrl('')/tcinfo/delTcinfoType";
+			var tcId = $(this).parents("tr").attr("id");
+			del(tcId, url);
+	});
+	
+});
+</script>
+
+#parse("share/footer.html")

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>淘口令</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    #main {
+        width: 100%;
+        height: 100%;
+        padding: 0 25px 25px 25px;
+        background-color: #F6F6F8;
+    }
+
+    .flex-box {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .section-one {
+        width: 100%;
+        border-radius: .4rem;
+        background: #fff;
+        margin-top: 1rem;
+        padding: .8rem 0 .4rem 0;
+
+    }
+
+    .flex-box__column {
+        flex-direction: column;
+    }
+
+    .copy-container .token {
+        text-align: center;
+        font-size: 1rem;
+        flex: auto;
+        border-left: .06rem dashed #ff6300;
+        border-top: .04rem dashed #ff6300;
+        border-bottom: .04rem dashed #ff6300;
+        border-bottom-left-radius: .2rem;
+        border-top-left-radius: .2rem;
+        overflow: hidden;
+
+    }
+
+    .copy-container {
+        height: 3rem;
+        line-height: 3rem;
+        font-size: .8rem;
+        width: 100%;
+        padding: 0 .4rem 0 .8rem;
+        margin: 0 auto 1rem auto;
+    }
+
+    .copy-container .button {
+        text-align: center;
+        width: 8rem;
+        background-color: #ff6300;
+        background-image: url(http://tp.dzhsq.top/abc/btn.gif);
+        color: #fff;
+        font-size: 1rem;
+        border: none;
+        outline: none;
+        border-bottom-right-radius: .2rem;
+        border-top-right-radius: .2rem;
+    }
+
+    .copy-container .button1 {
+        text-align: center;
+        width: 2.7rem;
+        background-color: #ff6300;
+        color: #fff;
+        font-size: 1rem;
+        border: none;
+        outline: none;
+        border-radius: .2rem;
+        text-align: center;
+    }
+
+    .section-three, .section-two {
+        width: 100%;
+        border-radius: .4rem;
+        background: #fff;
+        margin-top: 1rem;
+        padding: .8rem 0 .4rem 0;
+    }
+
+    .flex-grid {
+        flex: 4;
+    }
+
+    .section-two .flex-grid .flex-box .icon, .section-three .flex-grid .flex-box .icon {
+        margin: auto;
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .section-two .title::before, .section-three .title::before {
+        content: " ";
+        width: .18rem;
+        height: 1rem;
+        left: 0;
+        top: 0;
+        background-color: #ff8a00;
+        position: absolute;
+    }
+
+    .section-two .title, .section-three .title {
+        width: 100%;
+        position: relative;
+        height: 1rem;
+        text-align: left;
+        text-indent: 1rem;
+        font-size: 0.8rem;
+        line-height: 1rem;
+        font-weight: 500;
+        margin-bottom: 1.2rem;
+    }
+
+    .box-item {
+        position: relative;
+        flex: 1;
+        text-align: center;
+    }
+
+    .dashed_line {
+        position: absolute;
+        z-index: 2;
+        right: -0.5rem;
+        top: 1.5rem;
+        width: 1rem;
+        height: 0.1rem;
+    }
+
+    .section-two .flex-grid .flex-box span, .section-three .flex-grid .flex-box span {
+        font-size: .5rem;
+        color: #474747;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+
+</style>
+<body style="zoom:1;">
+<div id="main">
+    <div style="text-align: center">
+        <img src="$image" width="70%" alt="">
+    </div>
+    <section class="section-one flex-box flex-box__column">
+        <div class="copy-container flex-box">
+            <div class="token">口令：
+                <span data-taowords="">￥$taowords￥</span>
+            </div>
+            <button class="button" #if($taowords&&$taowords!="" ) data-clipboard-text="￥$taowords￥" #end id="copy">
+                一键复制
+            </button>
+        </div>
+        <div class="copy-container flex-box">
+            <a class="button1" href="https://shimo.im/docs/q1TLeZC8lN4W4D0f/read"
+               style="width:100%; text-decoration:none">★复制以上链接打开淘宝查看★</a></div>
+    </section>
+    <section class="section-two flex-box flex-box__column">
+        <label for="" class="title">
+            <b>邀请有奖</b>
+        </label>
+        <div class="flex-grid flex-box">
+            <div class="flex-box flex-box__column box-item">
+                <img src="http://tp.dzhsq.top/abc/icon_1_1.png" class="icon" alt="">
+                <span>1.分享名片</span>
+                <img src="http://tp.dzhsq.top/abc/bg_line.png" class="dashed_line" alt="">
+            </div>
+            <div class="flex-box flex-box__column box-item">
+                <img src="http://tp.dzhsq.top/abc/icon_1_2.png" class="icon" alt="">
+                <span>2.邀请好友</span>
+                <img src="http://tp.dzhsq.top/abc/bg_line.png" class="dashed_line" alt="">
+            </div>
+            <div class="flex-box flex-box__column box-item">
+                <img src="http://tp.dzhsq.top/abc/icon_1_3.png" class="icon" alt="">
+                <span>3.好友下单</span>
+                <img src="http://tp.dzhsq.top/abc/bg_line.png" class="dashed_line" alt="">
+            </div>
+            <div class="flex-box flex-box__column box-item">
+                <img src="http://tp.dzhsq.top/abc/icon_1_4.png" alt="" class="icon">
+                <span style="color:red">4.享永久分红</span>
+            </div>
+        </div>
+    </section>
+    <section class="section-three flex-box flex-box__column">
+        <label for="" class="title">
+            <font><b>重要提示</b>：</font><font size="1" color="#FF0000"><b>使用红包抵扣的订单返利会丢失</b></font>
+        </label>
+        <div class="flex-grid flex-box">
+            <img src="http://tp.dzhsq.top/hb.png" height="100%" width="100%">
+        </div>
+    </section>
+</div>
+<script src="#springUrl('')/Content/admin/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="#springUrl('')/Content/admin/js/page/clipboard.js" type="text/javascript" charset="UTF-8"></script>
+<!--<script src="https://cdn.bootcss.com/clipboard.js/1.7.0/clipboard.js"></script>-->
+<script type="text/javascript">
+    //复制文本
+    var clipboard = new Clipboard('#copy');
+
+    clipboard.on('success',
+        function (e) {
+            if (e.trigger.disabled == false || e.trigger.disabled == undefined) {
+                e.trigger.innerHTML = "复制成功，打开淘宝查看";
+                //e.clearSelection();
+                e.trigger.disabled = true;
+                //2秒后按钮恢复原状
+                setTimeout(function () {
+                        e.trigger.innerHTML = "一键复制";
+                        e.trigger.disabled = false;
+                    },
+                    2000);
+            }
+        });
+
+    clipboard.on('error',
+        function (e) {
+            e.trigger.innerHTML = "复制失败";
+        });
+
+
+</script>
+</body>
+</html>
