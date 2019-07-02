@@ -96,7 +96,7 @@ public class PageCtrl {
     }
 
 
-    /****
+   /* *//****
      * 页面跳转页
      * @param req
      * @param rsp
@@ -105,14 +105,14 @@ public class PageCtrl {
      * @param url
      * @param image
      * @return
-     */
+     *//*
     @RequestMapping("/page/index")
     public String index(HttpServletRequest req, HttpServletResponse rsp, Model model, String taowords, String url, String image) {
-        model.addAttribute("taowords", taowords);
+       *//* model.addAttribute("taowords", taowords);
         model.addAttribute("url", url);
-        model.addAttribute("image", image);
+        model.addAttribute("image", image);*//*
         return "bolu/index";
-    }
+    }*/
 
 
     @RequestMapping(value = "pc/{value}", method = RequestMethod.GET)
